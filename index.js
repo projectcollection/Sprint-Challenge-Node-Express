@@ -1,3 +1,12 @@
-// play this: https://www.youtube.com/watch?v=d-diB65scQU
+require('dotenv').config()
 
-// code away!
+const express = require('express')
+
+const app = express()
+
+app.use(express.json())
+
+
+const port = process.env.PORT || 4000
+
+app.listen(port)
