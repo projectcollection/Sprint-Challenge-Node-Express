@@ -12,8 +12,8 @@ const validateProject = (req, res, next) => {
 const validateAction = async (req, res, next) => {
     const {project_id, description, notes} = req.body
     if(project_id && description.length <= 128 && notes){
-        let project = await projectDb.get(project_id)
-        if(project){
+        let projects = await projectDb.get()
+        if(projects.filter(project => project.id === project_id).length > 0){
             next()
         }else{
             res.status(404).json({message: 'project not found'})
