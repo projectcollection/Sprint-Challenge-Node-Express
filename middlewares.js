@@ -1,3 +1,5 @@
+const projectDb = require('./data/helpers/projectModel')
+
 const validateProject = (req, res, next) => {
     const {name, description} = req.body
     if(name && description){
@@ -7,10 +9,15 @@ const validateProject = (req, res, next) => {
     res.status(400).json({message: '-.-'})
 }
 
-const validateAction = (req, res, next) => {
+const validateAction = async (req, res, next) => {
     const {project_id, description, notes} = req.body
     if(project_id && description.length <= 128 && notes){
-        next()
+        let project = await projectDb.get(project_id)
+        if(project){
+            next()
+        }else{
+            res.status(404).json({message: 'project not found'})
+        }
         return
     }
     res.status(400).json({message: '-.-'})
