@@ -1,6 +1,7 @@
 const express = require('express')
 
 const projectsDb = require('../data/helpers/projectModel')
+const {validateProject} = require('../middlewares')
 
 const router = express.Router()
 
@@ -27,8 +28,16 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-// add middleware to validate
-router.post('/', async (req, res) => {
+router.get('/:id/actions', async (req, res) => {
+    try{
+        let project = await projectsDb.get(req.params.id)
+        res.status(200).json(project.actions)
+    }catch(err){
+        res.status(404).json({message: message.notFound})
+    }
+})
+
+router.post('/', validateProject, async (req, res) => {
     try{
         let newProject = await projectsDb.insert(req.body)
         res.status(201).json(newProject)
@@ -37,7 +46,6 @@ router.post('/', async (req, res) => {
     }
 })
 
-// add middleware to validate
 router.put('/:id', async (req, res) => {
     try{
         let project = await projectsDb.update(req.params.id, req.body)

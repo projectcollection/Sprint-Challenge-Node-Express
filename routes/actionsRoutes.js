@@ -1,6 +1,7 @@
 const express = require('express')
 
 const actionsDb = require('../data/helpers/actionModel')
+const {validateAction} = require('../middlewares')
 
 const router = express.Router()
 
@@ -27,8 +28,7 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-// add middleware to validate [project_id, description, notes]
-router.post('/', async (req, res) => {
+router.post('/', validateAction, async (req, res) => {
     try{
         let newaction = await actionsDb.insert(req.body)
         res.status(201).json(newaction)
@@ -37,7 +37,6 @@ router.post('/', async (req, res) => {
     }
 })
 
-// add middleware to validate [project_id, description, notes]
 router.put('/:id', async (req, res) => {
     try{
         let action = await actionsDb.update(req.params.id, req.body)
