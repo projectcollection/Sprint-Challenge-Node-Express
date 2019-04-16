@@ -26,13 +26,23 @@ Demonstrate your understanding of this Sprint's concepts by answering the follow
 
 - [ ] Mention two parts of Express that you learned about this week.
 
+    Routing and middlewares.
+
 - [ ] Describe Middleware?
+
+    Middleware are functions with 3 inputs, the request, response and the next middleware. They are used to process the request before it gets to the request handler.
 
 - [ ] Describe a Resource?
 
+    A resource is content that is relevant/exists within the server/database.
+
 - [ ] What can the API return to help clients know if a request was successful?
 
+    A 200 status code and a message saying that it was successful?
+
 - [ ] How can we partition our application into sub-applications?
+
+    By using express.Routes().
 
 ## Project Setup
 
